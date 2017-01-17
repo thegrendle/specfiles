@@ -1,0 +1,72 @@
+diff -ru jboss-eap-6.4.orig/bin/appclient.conf jboss-eap-6.4/bin/appclient.conf
+--- jboss-eap-6.4.orig/bin/appclient.conf	2017-01-17 01:25:12.321590466 -0500
++++ jboss-eap-6.4/bin/appclient.conf	2017-01-17 01:27:15.096590199 -0500
+@@ -42,7 +42,7 @@
+ # Specify options to pass to the Java VM.
+ #
+ if [ "x$JAVA_OPTS" = "x" ]; then
+-   JAVA_OPTS="-Xms64m -Xmx512m -XX:MaxPermSize=256m -Djava.net.preferIPv4Stack=true"
++   JAVA_OPTS="-Xms64m -Xmx512m -Djava.net.preferIPv4Stack=true"
+    JAVA_OPTS="$JAVA_OPTS -Djboss.modules.system.pkgs=$JBOSS_MODULES_SYSTEM_PKGS -Djava.awt.headless=true"
+    JAVA_OPTS="$JAVA_OPTS -Djboss.modules.policy-permissions=true"
+ fi
+diff -ru jboss-eap-6.4.orig/bin/appclient.conf.bat jboss-eap-6.4/bin/appclient.conf.bat
+--- jboss-eap-6.4.orig/bin/appclient.conf.bat	2017-01-17 01:25:12.322590460 -0500
++++ jboss-eap-6.4/bin/appclient.conf.bat	2017-01-17 01:28:35.098590124 -0500
+@@ -40,7 +40,7 @@
+ rem #
+ 
+ rem # JVM memory allocation pool parameters - modify as appropriate.
+-set "JAVA_OPTS=-Xms64M -Xmx512M -XX:MaxPermSize=256M"
++set "JAVA_OPTS=-Xms64M -Xmx512M"
+ 
+ rem # Prefer IPv4
+ set "JAVA_OPTS=%JAVA_OPTS%  -Djava.net.preferIPv4Stack=true "
+diff -ru jboss-eap-6.4.orig/bin/domain.conf jboss-eap-6.4/bin/domain.conf
+--- jboss-eap-6.4.orig/bin/domain.conf	2017-01-17 01:25:12.321590466 -0500
++++ jboss-eap-6.4/bin/domain.conf	2017-01-17 01:27:38.412590246 -0500
+@@ -42,7 +42,7 @@
+ # Specify options to pass to the Java VM.
+ #
+ if [ "x$JAVA_OPTS" = "x" ]; then
+-   JAVA_OPTS="-Xms64m -Xmx512m -XX:MaxPermSize=256m -Djava.net.preferIPv4Stack=true"
++   JAVA_OPTS="-Xms64m -Xmx512m -Djava.net.preferIPv4Stack=true"
+    JAVA_OPTS="$JAVA_OPTS -Djboss.modules.system.pkgs=$JBOSS_MODULES_SYSTEM_PKGS -Djava.awt.headless=true"
+    JAVA_OPTS="$JAVA_OPTS -Djboss.modules.policy-permissions=true"
+ else
+diff -ru jboss-eap-6.4.orig/bin/domain.conf.bat jboss-eap-6.4/bin/domain.conf.bat
+--- jboss-eap-6.4.orig/bin/domain.conf.bat	2017-01-17 01:25:12.322590460 -0500
++++ jboss-eap-6.4/bin/domain.conf.bat	2017-01-17 01:28:58.546590180 -0500
+@@ -43,7 +43,7 @@
+ )
+ 
+ rem # JVM memory allocation pool parameters - modify as appropriate.
+-set "JAVA_OPTS=-Xms64M -Xmx512M -XX:MaxPermSize=256M"
++set "JAVA_OPTS=-Xms64M -Xmx512M"
+ 
+ rem # Prefer IPv4
+ set "JAVA_OPTS=%JAVA_OPTS% -Djava.net.preferIPv4Stack=true"
+diff -ru jboss-eap-6.4.orig/bin/standalone.conf jboss-eap-6.4/bin/standalone.conf
+--- jboss-eap-6.4.orig/bin/standalone.conf	2017-01-17 01:25:12.321590466 -0500
++++ jboss-eap-6.4/bin/standalone.conf	2017-01-17 01:26:15.198590792 -0500
+@@ -47,7 +47,7 @@
+ # Specify options to pass to the Java VM.
+ #
+ if [ "x$JAVA_OPTS" = "x" ]; then
+-   JAVA_OPTS="-Xms1303m -Xmx1303m -XX:MaxPermSize=256m -Djava.net.preferIPv4Stack=true"
++   JAVA_OPTS="-Xms1303m -Xmx1303m -Djava.net.preferIPv4Stack=true"
+    JAVA_OPTS="$JAVA_OPTS -Djboss.modules.system.pkgs=$JBOSS_MODULES_SYSTEM_PKGS -Djava.awt.headless=true"
+    JAVA_OPTS="$JAVA_OPTS -Djboss.modules.policy-permissions=true"
+ else
+diff -ru jboss-eap-6.4.orig/bin/standalone.conf.bat jboss-eap-6.4/bin/standalone.conf.bat
+--- jboss-eap-6.4.orig/bin/standalone.conf.bat	2017-01-17 01:25:12.322590460 -0500
++++ jboss-eap-6.4/bin/standalone.conf.bat	2017-01-17 01:28:20.352591670 -0500
+@@ -46,7 +46,7 @@
+ rem #
+ 
+ rem # JVM memory allocation pool parameters - modify as appropriate.
+-set "JAVA_OPTS=-Xms1G -Xmx1G -XX:MaxPermSize=256M"
++set "JAVA_OPTS=-Xms1G -Xmx1G"
+ 
+ rem # Prefer IPv4
+ set "JAVA_OPTS=%JAVA_OPTS% -Djava.net.preferIPv4Stack=true"
