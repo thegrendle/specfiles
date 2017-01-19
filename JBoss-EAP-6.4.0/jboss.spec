@@ -2,10 +2,10 @@
 %define jboss_version_major 	6.4
 %define jboss_fullname 		jboss-eap-%{jboss_version_full}
 %define jboss_installdir	/opt
-%define jboss_user 		jboss-as
-%define jboss_user_uid 		600
-%define jboss_group 		jboss-as
-%define jboss_group_gid		600
+%define jboss_user 		jboss
+%define jboss_user_uid 		185
+%define jboss_group 		jboss
+%define jboss_group_gid		185
 %define jboss_service 		jboss-as
 %define jboss_logdir 		/var/log/jboss-as
 %define runuser                 %{jboss_user}
@@ -15,7 +15,7 @@
 Summary:			JBoss Application Server
 Name:           		jboss-eap
 Version:        		%{jboss_version_full}
-Release:        		2
+Release:        		3
 License:        		LGPL
 BuildArch:      		x86_64
 Group:          		Applications/System
@@ -23,7 +23,7 @@ Source0:        		jboss-eap-%{jboss_version_full}.zip
 Patch0:				jboss-eap-6.4.0-2.DB.patch
 Requires:       		shadow-utils
 Requires:       		coreutils
-Requires:       		java-1.8.0-openjdk
+Requires:       		java-1.8.0-openjdk > 1.8.0
 Requires:       		initscripts
 Requires(post): 		/sbin/chkconfig
 Requires(pre): 			/usr/sbin/useradd, /usr/bin/getent, /usr/sbin/groupadd
@@ -330,7 +330,7 @@ then
   { /usr/bin/getent passwd %{jboss_user}; } &> /dev/null && { userdel %{jboss_user}; } &> /dev/null
   { /usr/bin/getent group %{jboss_group}; } &> /dev/null && { groupdel %{jboss_group}; } &> /dev/null
   { /usr/bin/getent group %{jboss_group}; } &> /dev/null || groupadd -g %{jboss_group_gid} %{jboss_group} >/dev/null
-  { /usr/bin/getent passwd %{jboss_user}; } &> /dev/null || useradd -r %{jboss_user} -u %{jboss_user_uid} -d %{jboss_installdir}/%{jboss_fullname} -g %{jboss_group_gid} -s /bin/bash >/dev/null 2>&1
+  { /usr/bin/getent passwd %{jboss_user}; } &> /dev/null || useradd -r %{jboss_user} -u %{jboss_user_uid} -d %{jboss_installdir}/%{jboss_fullname} -c "JBoss Service User" -g %{jboss_group_gid} -s /bin/bash >/dev/null 2>&1
 #elif [ $1 -eq 2 ];
 #then
 fi
@@ -371,21 +371,30 @@ then
 fi
 
 %preun
-
-/sbin/service %{jboss_service} status && service %{jboss_service} stop &> /dev/null
+{ 
+  /sbin/service %{jboss_service} status;
+  if [ $? -eq 0 ];
+  then
+    /sbin/service %{jboss_service} stop; 
+  fi
+} &> /dev/null
 
 
 %files
 %defattr(-,%{jboss_user},%{jboss_group})
 %dir %{jboss_installdir}/%{jboss_fullname}
-%dir %{jboss_logdir}
-%dir /var/run/%{jboss_service}
-%dir /etc/jboss-as
-%config(noreplace) /etc/jboss-as/jboss-as.conf
+%dir %attr(750,root,%{jboss_group}) %{jboss_logdir}
+%dir %attr(755,root,%{jboss_group}) /var/run/%{jboss_service}
+%dir %attr(750,root,%{jboss_user}) /etc/jboss-as
+%config(noreplace) %attr(750,root,%{jboss_group})/etc/jboss-as/jboss-as.conf
 %attr(755,root,root) /etc/rc.d/init.d/%{jboss_service}
 %{jboss_installdir}/%{jboss_fullname}/*
 
 %changelog
+* Thu Jan 19 2017 Darryl Blonski <darryl.blonski@cyone.com> 6.4.0-3
+- Changed the service user, group, uid and gid of the service account to match V3.
+- Clarified JRE requirement.
+
 * Tue Jan 17 2017 Darryl Blonski <darryl.blonski@cyone.com> 6.4.0-2
 - Created and added patch to remove defunct Java options.
 
